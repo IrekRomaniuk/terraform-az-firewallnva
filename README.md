@@ -80,7 +80,7 @@ Password:
 
 ## Remarks
 
-Do not pass input variables when destroying
+Do not pass input variables when destroying: terraform destroy --force
 
 ## Requirements
 
