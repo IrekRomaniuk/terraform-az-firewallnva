@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rt_table" {
-  name                          = var.rt_table_rg_name
+  name                          = "${var.prefix}-${var.rt_table_rg_name}"
   location                      = var.location
 }
 

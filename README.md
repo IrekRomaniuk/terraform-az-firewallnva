@@ -8,6 +8,34 @@ The resources are provisioned into a number of resource groups by resource type,
 
 This is designed for lab use, and further security hardening would be recommended if you wish to use this for any production workloads. This lab will provide you with the basic foundation in order to test and learn more about Azure Firewall.
 
+## To be created/edited
+
+Add main.tf with tenant, subscription id as well as client id and secret
+
+```
+terraform {
+required_version = "~> 0.12.0"
+}
+
+provider "azurerm" {
+  features {}
+  version = "~> 2.0.0"
+  tenant_id="
+  subscription_id=""
+  client_id=""
+  client_secret=""
+  skip_provider_registration = true
+  
+}
+```
+
+
+Will be asked for vm password and resource group prefix. 
+
+Also edit below:
+
+- network.tf: respurce groups location and subnet prefixes
+
 ## Requirements
 
 * terraform core `0.12.n`

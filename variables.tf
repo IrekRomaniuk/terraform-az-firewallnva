@@ -1,10 +1,13 @@
+variable "prefix" {
+  description = "Prefix for all resources"
+}
 variable "location" {
   description = "Location for all resources"
 }
 
-variable "networkrgname" {
+/*variable "networkrgname" {
   description = "Location for all resources"
-}
+}*/
 
 variable "computergname" {
   description = "Location for all resources"

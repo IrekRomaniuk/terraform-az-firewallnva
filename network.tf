@@ -2,30 +2,30 @@
 module "hubnetwork" {
     source              = "./modules/networkbuild"
     vnet_name           = var.hub_vnet_name
-    resource_group_name = "nvalab-${var.hub_vnet_name}-rg"
-    location            = "uksouth"
-    address_space       = "10.0.0.0/16"
-    subnet_prefixes     = ["10.0.1.0/26", "10.0.2.0/24", "10.0.3.0/24"]
-    subnet_names        = ["AzureFirewallSubnet", "ManagementSubnet", "SharedServices"]
+    resource_group_name = "${var.prefix}-${var.hub_vnet_name}"
+    location            = "eastus"
+    address_space       = "10.110.0.0/16"
+    subnet_prefixes     = ["10.110.1.0/26", "10.110.2.0/24", "10.110.3.0/24", "10.110.4.0/24"]
+    subnet_names        = ["AzureFirewallSubnet", "ManagementSubnet", "SharedServices","Bastion"]
 }
 
 module "spoke1network" {
     source              = "./modules/networkbuild"
     vnet_name           = var.spoke1_vnet_name
-    resource_group_name = "nvalab-${var.spoke1_vnet_name}-rg"
-    location            = "uksouth"
-    address_space       = "10.100.0.0/16"
-    subnet_prefixes     = ["10.100.1.0/24", "10.100.2.0/24", "10.100.3.0/24"]
-    subnet_names        = ["WebTier", "LogicTier", "DatabaseTier"]
+    resource_group_name = "${var.prefix}-${var.spoke1_vnet_name}"
+    location            = "eastus"
+    address_space       = "10.111.0.0/16"
+    subnet_prefixes     = ["10.111.1.0/24", "10.111.2.0/24", "10.111.3.0/24", "10.111.4.0/24"]
+    subnet_names        = ["WebTier", "LogicTier", "DatabaseTier","Bastion"]
 }
 module "spoke2network" {
     source              = "./modules/networkbuild"
     vnet_name           = var.spoke2_vnet_name
-    resource_group_name = "nvalab-${var.spoke2_vnet_name}-rg"
-    location            = "uksouth"
-    address_space       = "10.200.0.0/16"
-    subnet_prefixes     = ["10.200.1.0/24", "10.200.2.0/24", "10.200.3.0/24"]
-    subnet_names        = ["WebTier", "LogicTier", "DatabaseTier"]
+    resource_group_name = "${var.prefix}-${var.spoke2_vnet_name}"
+    location            = "eastus"
+    address_space       = "10.112.0.0/16"
+    subnet_prefixes     = ["10.112.1.0/24", "10.112.2.0/24", "10.112.4.0/24"]
+    subnet_names        = ["WebTier", "LogicTier", "DatabaseTier","Bastion"]
 }
 
 // nsg associations 
@@ -64,14 +64,14 @@ resource "azurerm_subnet_route_table_association" "spoke2_udr_assoc" {
 
 resource "azurerm_virtual_network_peering" "hubspoke1" {
   name                      = "hubspoke1"
-  resource_group_name       = "nvalab-${module.hubnetwork.vnet_name}-rg"
+  resource_group_name       = "${var.prefix}-${module.hubnetwork.vnet_name}"
   virtual_network_name      = module.hubnetwork.vnet_name
   remote_virtual_network_id = module.spoke1network.vnet_id
 }
 
 resource "azurerm_virtual_network_peering" "spoke1hub" {
   name                      = "spoke1hub"
-  resource_group_name       = "nvalab-${module.spoke1network.vnet_name}-rg"
+  resource_group_name       = "${var.prefix}-${module.spoke1network.vnet_name}"
   virtual_network_name      = module.spoke1network.vnet_name
   remote_virtual_network_id = module.hubnetwork.vnet_id
   allow_forwarded_traffic   = true
@@ -79,14 +79,14 @@ resource "azurerm_virtual_network_peering" "spoke1hub" {
 
 resource "azurerm_virtual_network_peering" "hubspoke2" {
   name                      = "hubspoke2"
-  resource_group_name       = "nvalab-${module.hubnetwork.vnet_name}-rg"
+  resource_group_name       = "${var.prefix}-${module.hubnetwork.vnet_name}"
   virtual_network_name      = module.hubnetwork.vnet_name
   remote_virtual_network_id = module.spoke2network.vnet_id
 }
 
 resource "azurerm_virtual_network_peering" "spoke2hub" {
   name                      = "spoke2hub"
-  resource_group_name       = "nvalab-${module.spoke2network.vnet_name}-rg"
+  resource_group_name       = "${var.prefix}-${module.spoke2network.vnet_name}"
   virtual_network_name      = module.spoke2network.vnet_name
   remote_virtual_network_id = module.hubnetwork.vnet_id
   allow_forwarded_traffic   = true

@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "computeRG" {
-  name     = var.computergname
+  name     = "${var.prefix}-${var.computergname}"
   location = var.location
 }
 module "hubmanagementvm" {
