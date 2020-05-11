@@ -36,6 +36,34 @@ Also edit below:
 
 - network.tf: respurce groups location and subnet prefixes
 
+## Result
+
+Should get the below output at the end:
+
+```
+...
+Apply complete! Resources: 58 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+firewall_public_dns_fqdn = xxx.eastus.cloudapp.azure.com
+hub_vm_dns_label = xxx.eastus.cloudapp.azure.com
+spoke1_vm_private_ip = 10.111.1.4
+spoke2_vm_private_ip = 10.112.1.4
+vm_password = xxx
+vm_username = xxx
+```
+
+then
+
+```
+$ ssh azureuser@xxx.eastus.cloudapp.azure.com
+[azureuser@azurefw-hub-vm ~]$ ssh 10.111.1.4
+[azureuser@spoke1-web-vm ~]$
+```
+
+Password:
+
 ## Requirements
 
 * terraform core `0.12.n`
