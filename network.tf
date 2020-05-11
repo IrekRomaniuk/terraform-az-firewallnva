@@ -6,7 +6,7 @@ module "hubnetwork" {
     location            = "eastus"
     address_space       = "10.110.0.0/16"
     subnet_prefixes     = ["10.110.1.0/26", "10.110.2.0/24", "10.110.3.0/24", "10.110.4.0/24"]
-    subnet_names        = ["AzureFirewallSubnet", "ManagementSubnet", "SharedServices","BastionSubnet"]
+    subnet_names        = ["AzureFirewallSubnet", "ManagementSubnet", "SharedServices","AzureBastionSubnet"]
 }
 
 module "spoke1network" {
@@ -16,7 +16,7 @@ module "spoke1network" {
     location            = "eastus"
     address_space       = "10.111.0.0/16"
     subnet_prefixes     = ["10.111.1.0/24", "10.111.2.0/24", "10.111.3.0/24", "10.111.4.0/24"]
-    subnet_names        = ["WebTier", "LogicTier", "DatabaseTier","BastionSubnet"]
+    subnet_names        = ["WebTier", "LogicTier", "DatabaseTier","AzureBastionSubnet"]
 }
 module "spoke2network" {
     source              = "./modules/networkbuild"
@@ -25,7 +25,7 @@ module "spoke2network" {
     location            = "eastus"
     address_space       = "10.112.0.0/16"
     subnet_prefixes     = ["10.112.1.0/24", "10.112.2.0/24", "10.112.3.0/24", "10.112.4.0/24"]
-    subnet_names        = ["WebTier", "LogicTier", "DatabaseTier","BastionSubnet"]
+    subnet_names        = ["WebTier", "LogicTier", "DatabaseTier","AzureBastionSubnet"]
 }
 
 // nsg associations 
