@@ -30,4 +30,3 @@ override.tf.json
 
 provider.tf
 main.tf
-output.tf
