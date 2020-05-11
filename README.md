@@ -8,6 +8,12 @@ The resources are provisioned into a number of resource groups by resource type,
 
 This is designed for lab use, and further security hardening would be recommended if you wish to use this for any production workloads. This lab will provide you with the basic foundation in order to test and learn more about Azure Firewall.
 
+# Updated from from sdcscripts/terraform-az-firewallnva fork
+
+- resource prefix added
+- defaults updated
+- bastion subnets added
+
 ## To be created/edited
 
 Add main.tf with tenant, subscription id as well as client id and secret
@@ -35,10 +41,11 @@ Will be asked for vm password and resource group prefix.
 Also edit below:
 
 - network.tf: respurce groups location and subnet prefixes
+- copy terraform.tfvars.example as terraform.tfvars and editvariables if necessary
 
 ## Result
 
-Should get the below output at the end:
+Should get the below output at the end (Private ip might be different, depends on network.tf edited):
 
 ```
 ...
@@ -54,6 +61,8 @@ vm_password = xxx
 vm_username = xxx
 ```
 
+![Alt text](../master/supporting/netlab.jpg?raw=true "Resource groups created with prefix 'netlab'")
+
 then
 
 ```
@@ -63,6 +72,15 @@ $ ssh azureuser@xxx.eastus.cloudapp.azure.com
 ```
 
 Password:
+
+## ToDo
+
+- add bastion hosts in hub and spoke subnets
+- password fromm key vault instead of prompted
+
+## Remarks
+
+Do not pass input variables when destroying
 
 ## Requirements
 
